@@ -1,6 +1,6 @@
 /*
 
-LOGIC 1
+LOGIC
 
 Playfield
 Weapon
