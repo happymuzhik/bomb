@@ -2,7 +2,7 @@
 
 	window.Bomb = function(){
 
-		var Playfieled = function(){
+		var Playfield = function(){
 			return 1;
 		};
 		///////////////////////////
@@ -21,7 +21,7 @@
 			};
 		//////////////////////////
 		var colors = [
-			"red": {
+			"red": {				
 				used:false	
 			},
 			"blue": {
