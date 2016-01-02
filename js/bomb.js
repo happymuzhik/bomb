@@ -20,7 +20,29 @@
 				return game;
 			};
 		//////////////////////////
-		var colors = ["red","blue","green","yellow","black","orange","brown"];
+		var colors = [
+			"red": {
+				used:false	
+			},
+			"blue": {
+				used:false
+			},
+			"green": {
+				used:false
+			},
+			"yellow": {
+				used:false
+			},
+			"black": {
+				used:false
+			},
+			"orange": {
+				used:false
+			},
+			"brown": {
+				used:false
+			}
+		];
 		var Player = function(params){
 				var player = {
 						name: params && params.name||'Player',
@@ -39,14 +61,14 @@
 			weapons: [],
 			players: [],
 			addPlayer: function(params){
-				// if ( params && params.color ){
-				// 	for (var i = 0; i < colors.length; i++){
-				// 		if (colors[i] == params.color){
-				// 			console.log('Choose another color, please.');
-				// 			return;
-				// 		}
-				// 	}					
-				// }
+				if ( params && params.color ){
+					for (var i = 0; i < colors.length; i++){
+						if (colors[i] == params.color){
+							console.log('Choose another color, please.');
+							return;
+						}
+					}					
+				}
 				var preset = {
 					name: params && params.name||('Player ' + (this.players.length + 1)),
 					color: ''
