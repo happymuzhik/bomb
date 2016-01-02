@@ -1,3 +1,43 @@
+/*
+
+LOGIC
+
+Playfield
+Weapon
+Player={
+	name
+	health
+	maxpower
+	color
+	wins
+	money
+	weapons:[]
+}
+Round
+Game={
+	players:[],
+	round
+	maxround
+	walls:[]
+}
+
+bomb:{
+	colors:[]
+	weapons:[]
+	walls:[]
+	newGame:{		
+		walls:[]
+		players:[]
+		round={
+			winner
+			wall
+		}
+	}
+}
+
+FUCK LOGIC
+
+*/
 ;(function(window){
 
 	window.Bomb = function(){
@@ -60,6 +100,9 @@
 			walls: ['warp','none','accelerate','stickey','elastic'],
 			weapons: [],
 			players: [],
+			newGame: function(){
+				return 1;
+			},
 			addPlayer: function(params){
 				// if ( params && params.color ){
 				// 	for (var i = 0; i < colors.length; i++){
