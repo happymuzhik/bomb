@@ -8,7 +8,12 @@ Playfield{
 		height: 480px
 	}
 }
-Weapon
+Weapon={
+	name
+	ammunition
+	damage
+	radius
+}
 Player={
 	name
 	health
@@ -28,12 +33,20 @@ Game={
 
 bomb:{
 	colors:{}
-	weapons:[]
+	weapons:{
+		addWaepon
+		remWeapon
+		weaponList:[]
+	}
 	walls:[]
 	currentGame
 	newGame:{		
 		walls:[]
-		players:[]
+		players:{
+			addPlayer
+			remPlayer
+			playerList:[]
+		}
 		round={
 			winner
 			wall
@@ -77,8 +90,10 @@ FUCK LOGIC
 			currentGame: false,		
 			newGame: function(){
 				var game = {};
-				game.players = [];
-				game.addPlayer = function(params){
+				game.players = {
+					playerList: []
+				};
+				game.players.addPlayer = function(params){
 					var wrong_clr = true;
 					if ( params && params.color ){
 						for (k in bomb.colors){
@@ -101,28 +116,28 @@ FUCK LOGIC
 						}						
 					}
 					if ( params && params.name ){
-						for ( var i = 0; i < this.players.length; i++ ){
-							if ( this.players[i].name == params.name ){
+						for ( var i = 0; i < this.playerList.length; i++ ){
+							if ( this.playerList[i].name == params.name ){
 								console.log('Choose another name, please.');
 								return;
 							}
 						}
 					}
 					var preset = {
-						name: params && params.name||('Player ' + (this.players.length + 1)),
+						name: params && params.name||('Player ' + (this.playerList.length + 1)),
 						color: params.color
 					}
 					var player = new Player(preset);
-					this.players.push(player);
+					this.playerList.push(player);
 					return player;
 				};
-				game.remPlayer = function(p){
-					if (!this.players[p]){
+				game.players.remPlayer = function(p){
+					if (!this.playerList[p]){
 						console.log('Wrong player!');
 						return;
 					}
-					var player = this.players[p];
-					this.players.splice(player,1);
+					var player = this.playerList[p];
+					this.playerList.splice(player,1);
 					return player;
 				};
 				this.currentGame = game;
@@ -134,4 +149,11 @@ FUCK LOGIC
 
 	};
 
+})(window);
+;(function(window){
+	window.bombGame = new Bomb();
+	window.bombGame.newGame();
+	window.bombGame.currentGame.players.addPlayer();
+	window.bombGame.currentGame.players.addPlayer();
+	window.bombGame.currentGame.players.addPlayer();
 })(window);
