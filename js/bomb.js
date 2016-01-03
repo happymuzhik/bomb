@@ -30,6 +30,7 @@ bomb:{
 	colors:{}
 	weapons:[]
 	walls:[]
+	currentGame
 	newGame:{		
 		walls:[]
 		players:[]
@@ -72,22 +73,32 @@ FUCK LOGIC
 				}
 			},
 			walls: ['warp','none','accelerate','stickey','elastic'],
-			weapons: [],			
+			weapons: [],
+			currentGame: false,		
 			newGame: function(){
 				var game = {};
 				game.players = [];
 				game.addPlayer = function(params){
-					// if ( params && params.color ){
-					// 	for (var i = 0; i < colors.length; i++){
-					// 		if (colors[i] == params.color){
-					// 			console.log('Choose another color, please.');
-					// 			return;
-					// 		}
-					// 	}					
-					// }
+					var wrong_clr = true, wrong_name = true;
+					if ( params && params.color ){
+						for (k in bomb.colors){
+							if ( (k == params.color) && (!bomb.colors[k].used) ){
+								bomb.colors[k].used = true;
+								wrong_clr = false;
+								console.log('wrong_clr - '+wrong_clr);
+							}							
+						}
+						if ( wrong_clr ) {
+							console.log('Choose another color, please.');
+							return;
+						}			
+					}else{
+						console.log('Incorrect params.');
+						return;
+					}
 					var preset = {
 						name: params && params.name||('Player ' + (this.players.length + 1)),
-						color: ''
+						color: params && params.color||''
 					}
 					var player = new Player(preset);
 					this.players.push(player);
@@ -102,6 +113,7 @@ FUCK LOGIC
 					this.players.splice(player,1);
 					return player;
 				};
+				this.currentGame = game;
 				return game;
 			}
 		};	
