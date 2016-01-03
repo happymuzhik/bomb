@@ -79,13 +79,12 @@ FUCK LOGIC
 				var game = {};
 				game.players = [];
 				game.addPlayer = function(params){
-					var wrong_clr = true, wrong_name = true;
+					var wrong_clr = true;
 					if ( params && params.color ){
 						for (k in bomb.colors){
 							if ( (k == params.color) && (!bomb.colors[k].used) ){
 								bomb.colors[k].used = true;
 								wrong_clr = false;
-								console.log('wrong_clr - '+wrong_clr);
 							}							
 						}
 						if ( wrong_clr ) {
@@ -93,12 +92,25 @@ FUCK LOGIC
 							return;
 						}			
 					}else{
-						console.log('Incorrect params.');
-						return;
+						for (k in bomb.colors){
+							if ( !bomb.colors[k].used ){
+								bomb.colors[k].used = true;								
+								params = {color:k};	
+								break;					
+							}							
+						}						
+					}
+					if ( params && params.name ){
+						for ( var i = 0; i < this.players.length; i++ ){
+							if ( this.players[i].name == params.name ){
+								console.log('Choose another name, please.');
+								return;
+							}
+						}
 					}
 					var preset = {
 						name: params && params.name||('Player ' + (this.players.length + 1)),
-						color: params && params.color||''
+						color: params.color
 					}
 					var player = new Player(preset);
 					this.players.push(player);
