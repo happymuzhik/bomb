@@ -7,6 +7,14 @@ Playfield{
 		width: 640px
 		height: 480px
 	}
+
+	2 слоя-массива
+	1й фон, траектории
+	2й объекты - земля, танки, снаряды
+
+	массив состоит из объектов.
+	каждый объект - пиксель определенного класса ( земля, фонб танк... )
+
 }
 Weapon={
 	name
@@ -32,6 +40,7 @@ Game={
 }
 
 bomb:{
+	playfield: {}
 	colors:{}
 	weapons:{
 		addWeapon
@@ -88,10 +97,18 @@ FUCK LOGIC
 			walls: ['warp','none','accelerate','stickey','elastic'],
 			weapons: {
 				addWeapon: function(params){
-
+					var weapon = new Weapon(params);
+					this.weaponList.push(weapon);
+					return weapon;
 				},
-				remWeapon:function(weapon){
-
+				remWeapon:function(w){
+					if (!this.weaponList[w]){
+						console.log('Wrong weapon!');
+						return;
+					}
+					var weapon = this.weaponList[w];
+					this.weaponList.splice(weapon,1);
+					return weapon;
 				},
 				weaponList: []
 			},
@@ -133,7 +150,13 @@ FUCK LOGIC
 					}
 					var preset = {
 						name: params && params.name||('Player ' + (this.playerList.length + 1)),
-						color: params.color
+						color: params.color,
+						weapons: []
+					}
+					for ( var i = 0;  i < bomb.weapons.weaponList.length; i++ ){
+						if ( bomb.weapons.weaponList[i].isDefault ){
+							preset.weapons.push(bomb.weapons.weaponList[i]);
+						}
 					}
 					var player = new Player(preset);
 					this.playerList.push(player);
@@ -152,6 +175,11 @@ FUCK LOGIC
 				return game;
 			}
 		};	
+
+		bomb.weapons.addWeapon({name:'Hand Grenade', ammunition: 1000000, damage: 100, radius: 10, isDefault: true});
+		bomb.weapons.addWeapon({name:'Standard Incinerator', ammunition: 25, damage: 100, radius: 100, isDefault: true});
+
+		bomb.playfield = new Playfield({width:800, height: 480});
 
 		return bomb;
 

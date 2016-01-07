@@ -6,7 +6,7 @@ var Player = function(params){
 			color: params && params.color||'red',
 			wins: 0,
 			money: 0,
-			weapons: []
+			weapons: params && params.weapons||[]
 		};
 	return player;
 };
