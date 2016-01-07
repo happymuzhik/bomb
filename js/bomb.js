@@ -34,7 +34,7 @@ Game={
 bomb:{
 	colors:{}
 	weapons:{
-		addWaepon
+		addWeapon
 		remWeapon
 		weaponList:[]
 	}
@@ -86,7 +86,15 @@ FUCK LOGIC
 				}
 			},
 			walls: ['warp','none','accelerate','stickey','elastic'],
-			weapons: [],
+			weapons: {
+				addWeapon: function(params){
+
+				},
+				remWeapon:function(weapon){
+
+				},
+				weaponList: []
+			},
 			currentGame: false,		
 			newGame: function(){
 				var game = {};
